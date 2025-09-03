@@ -5,7 +5,7 @@ import requests
 API_ENDPOINT = "https://known-phoenix-specially.ngrok-free.app"
 
 st.set_page_config(
-    page_title="Video Uploader",
+    page_title="Ethicam - Anonimização de Vídeos",
     page_icon="📹",
     layout="centered"
 )
