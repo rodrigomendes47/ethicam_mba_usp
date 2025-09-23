@@ -1,5 +1,5 @@
 # Ethicam
-
+[ENGLISH BELOW]
 Ethicam é um projeto de anonimização de vídeos, inicialmente batizado como a junção das palavras **Ethic** e **Camera**. O projeto oferece um serviço de backend que processa vídeos e borra o rosto de pessoas, garantindo a privacidade.
 <img width="945" height="647" alt="image" src="https://github.com/user-attachments/assets/e132d3b7-e637-4933-8e19-aa02c8a2865c" />
 
@@ -71,3 +71,79 @@ Um dos objetivos principais do projeto é anonimizar as imagens com a menor perd
     > O objetivo da imagem parece ser documentar a presença dessas pessoas juntas, mas com a preocupação de não expor suas identidades individuais."
 
 A análise do Gemini 2.5 Flash confirma que, mesmo com a anonimização, o contexto geral da imagem foi preservado, atingindo o objetivo do projeto.
+
+---
+
+# Ethicam
+
+Ethicam is a video anonymization project, initially named as a combination of the words **Ethic** and **Camera**. The project provides a backend service that processes videos and blurs people's faces, ensuring their privacy.
+<img width="945" height="647" alt="image" src="https://github.com/user-attachments/assets/e132d3b7-e637-4933-8e19-aa02c8a2865c" />
+
+## Frontend
+
+The application's frontend serves as an interface for users to test the anonymization service. It was developed in Python, using the **Streamlit** library, which made it easy to create a simple and interactive web interface.
+
+Users can upload videos in MP4, MOV, AVI, and MKV formats. The frontend then sends the video to the backend service via a REST API, built with the **FastAPI** library. After processing, the anonymized video can be downloaded.
+
+The frontend solution is hosted on the **Render** platform, in an instance with 512 MB of RAM and 0.1 CPU. The application is publicly available at **https://anonimization-front.onrender.com**.
+<img width="760" height="426" alt="image" src="https://github.com/user-attachments/assets/ca9507d5-c558-4d16-b2e6-aebff5e5207d" />
+
+## Backend
+
+The project's backend was implemented on a **Google Colab** instance, using an NVIDIA Tesla T4 GPU with 16 GB of VRAM to process videos efficiently.
+
+The anonymization process works as follows:
+1. The received video is processed **frame by frame** with the **OpenCV** library.
+2. A **Gaussian blur filter** (`GaussianBlur()`) is applied to the regions where people are detected, effectively blurring them.
+3. This type of filter creates a more natural and smooth blur, preserving the image's edges and contours.
+
+The backend is a **REST API** server, developed with **FastAPI**, which receives input videos and returns the processed video. For public access during development, the **Ngrok** tool was used to expose the Colab server to the internet.
+
+---
+
+## Auxiliary Tools
+
+* **Streamlit:** An open-source Python library for creating interactive web applications simply and quickly, ideal for data science and machine learning projects.
+* **Render:** A unified cloud platform that simplifies the deployment and management of applications, databases, and web services.
+* **Ngrok:** A tunneling tool that creates a secure public URL for a local server, exposing it to the internet.
+
+---
+
+## Results and Discussion
+
+To validate the tool's effectiveness, a series of example videos were submitted to the platform.
+
+### Example Images
+
+The project successfully anonymizes faces while preserving the images' context.
+<img width="897" height="242" alt="image" src="https://github.com/user-attachments/assets/22d60dcd-0320-440a-9ed7-0ebd6c0aa369" />
+<img width="938" height="306" alt="image" src="https://github.com/user-attachments/assets/216d0d92-66b1-4fe0-923e-427e23bcbf95" />
+<img width="927" height="260" alt="image" src="https://github.com/user-attachments/assets/fee5b43b-c40e-481c-8cd8-3266ced6ed62" />
+
+* Original image source: Pixabay
+* Censored source: Author
+
+### Performance
+
+The frames per second (FPS) rate varies between 15 and 30, depending on factors such as video length and quality, and the number of face detections.
+
+### Context Preservation
+
+One of the project's main goals is to anonymize images with the least possible loss of context. To validate this, a generative AI model, **Gemini 2.5 Flash**, was used to analyze an anonymized frame.
+
+* **Input prompt:** Describe the image. What does it portray?
+  <img width="860" height="500" alt="image" src="https://github.com/user-attachments/assets/b2705af4-a4eb-44dd-a451-308b93716b43" />
+
+
+* **Model-generated response:**
+    > "Due to the blurred faces, the image was likely edited to protect the privacy of the people shown. The situation, with people posing in a line in front of an office background, suggests a professional or educational moment, such as:
+    >
+    > * A team photo: It's common for work groups to take photos to document the team or for internal use.
+    >
+    > * A networking event: The photo could be from a meeting or workshop.
+    >
+    > * A class or study group photo: The arrangement of the people may indicate that they are colleagues from a course or college.
+    >
+    > The image's purpose seems to be to document the presence of these people together, but with the concern of not exposing their individual identities."
+
+The Gemini 2.5 Flash analysis confirms that even with anonymization, the general context of the image was preserved, achieving the project's objective.
